@@ -6,7 +6,7 @@
 
 import requests, hashlib, random
 
-print("Sadaf BruteForcing Started Working !")
+print("Sadaf Brute Forcing Started Working !")
 
 proxies_file = [every_line.strip('\n') for every_line in open('Proxies.txt', 'r')]
 
