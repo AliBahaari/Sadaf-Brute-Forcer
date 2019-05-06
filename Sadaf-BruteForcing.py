@@ -1,4 +1,4 @@
-# Sadaf-BruteForcer
+# Sadaf-BruteForcing
 
 # HTTP, HTTPS Or ...
 # Managing Modules
@@ -6,7 +6,7 @@
 
 import requests, hashlib, random
 
-print("Sadaf BruteForcer Started Working !")
+print("Sadaf BruteForcing Started Working !")
 
 proxies_file = [every_line.strip('\n') for every_line in open('Proxies.txt', 'r')]
 
